@@ -1,0 +1,63 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: K-Lock Professional ${{ github.ref_name }}
+        body: |
+          ## K-Lock Professional ${{ github.ref_name }}
+          
+          ### Download
+          - **K-Lock Professional.exe** (10.0 MB) - Ready to download!
+          - **System Requirements:** Windows 10/11 (64-bit recommended)
+          - **Dependencies:** None required (all included in EXE)
+          
+          ### Features
+          - 🔍 Advanced file and folder lock detection
+          - 🎯 Process identification with detailed information
+          - ⚠️ Force release functionality with safety warnings
+          - 🎨 Professional GUI with real-time updates
+          - 🛡️ Safety features and confirmation dialogs
+          
+          ### Quick Start
+          1. Download `K-Lock Professional.exe`
+          2. Run the executable (no installation required)
+          3. Select a file or folder to analyze
+          4. Click "Analyze Lock Status"
+          5. Force release locks if needed
+          
+          ### System Requirements
+          - Windows 10/11 (64-bit recommended)
+          - 50 MB available RAM
+          - 15 MB free disk space
+          - No dependencies required
+          
+          **K-Lock Professional** - The professional solution for file and folder lock management on Windows.
+        draft: false
+        prerelease: false
+        
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./releases/K-Lock Professional.exe
+        asset_name: K-Lock Professional.exe
+        asset_content_type: application/octet-stream

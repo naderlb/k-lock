@@ -75,4 +75,5 @@ Thumbs.db
 K-Lock_Portable/
 *.exe
 !dist/K-Lock Professional.exe
+!releases/K-Lock Professional.exe
 !k_lock_icon.ico
